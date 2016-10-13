@@ -1,9 +1,8 @@
-/* See the file "LICENSE" for the full license and copyrights governing this code. */
+/* Graphs messages published by msg type twist in Rviz simulator */
 
 #include "../include/node_states/twist_stamped_visual.h"
 
 namespace path_manager_plugins
-
 {
 
 TwistStampedVisual::TwistStampedVisual(Ogre::SceneManager* sceneManagerNode, Ogre::SceneNode* parentNode)
@@ -23,7 +22,7 @@ void TwistStampedVisual::setMessage(const geometry_msgs::TwistStamped::ConstPtr&
 {
   float Vx, Vy, Vz, Vmag, Vang, radius;
 
-	////ROS_INFO_STREAM("INSIDE SET MESSAGE");
+  //ROS_INFO_STREAM("INSIDE SET MESSAGE");
   Vx = msg->twist.linear.x;
   Vy = msg->twist.linear.y;
   Vz = msg->twist.linear.z;
@@ -64,10 +63,8 @@ void TwistStampedVisual::setMessage(const geometry_msgs::TwistStamped::ConstPtr&
   tf::Vector3 newPointInMapFrame = transform * newPointInRobotFrame;
   Ogre::Vector3 pointToPush(newPointInMapFrame.getX(), newPointInMapFrame.getY(), newPointInMapFrame.getZ());
 
-
   billBoardVisual->addPoint(pointToPush);
   billBoardVisual->setLineWidth(width);
-
 
   for(int i = 0; i < steps; i++)
   {
@@ -84,12 +81,12 @@ void TwistStampedVisual::setMessage(const geometry_msgs::TwistStamped::ConstPtr&
     billBoardVisual->addPoint(pointToPush);
     t += dt;
   }
-//	//ROS_INFO_STREAM("OUTSIDE SET MESSAGE");
+//ROS_INFO_STREAM("OUTSIDE SET MESSAGE");
 }
 
 void TwistStampedVisual::setFramePosition( const Ogre::Vector3& position )
 {
-	//ROS_INFO("INSIDE SET_FRAME_POSITION FUNCTION");
+  //ROS_INFO("INSIDE SET_FRAME_POSITION FUNCTION");
   sceneNode->setPosition( position );
   billBoardVisual->setPosition(position);
 }
