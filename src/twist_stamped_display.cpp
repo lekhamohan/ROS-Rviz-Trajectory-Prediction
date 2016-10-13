@@ -1,11 +1,9 @@
 /* See the file "LICENSE" for the full license and copyrights governing this code. */
 
 #include "../include/node_states/twist_stamped_display.h"
-
 #include "../include/node_states/twist_stamped_visual.h"
 
 namespace path_manager_plugins
-
 {
 
 TwistStampedDisplay::TwistStampedDisplay() 
@@ -19,7 +17,7 @@ TwistStampedDisplay::TwistStampedDisplay()
 
 void TwistStampedDisplay::onInitialize()
 {
-	////ROS_INFO("INSIDE ONINITIALIZE");
+  //ROS_INFO("INSIDE ONINITIALIZE");
   MFDClass::onInitialize();
   updateLengthAndColor();
   reset();
@@ -40,14 +38,14 @@ void TwistStampedDisplay::updateLengthAndColor()
 
 void TwistStampedDisplay::reset()
 {
-	//ROS_INFO("INSIDE RESET");
+  //ROS_INFO("INSIDE RESET");
   MFDClass::reset();
   visuals.clear();
 }
 
 void TwistStampedDisplay::processMessage(const geometry_msgs::TwistStamped::ConstPtr& msg)
 { 
-	//ROS_INFO_STREAM(std::endl<<std::endl<<"INSIDE PROCESS MESSAGE");
+  //ROS_INFO_STREAM(std::endl<<std::endl<<"INSIDE PROCESS MESSAGE");
   Ogre::Quaternion orientation;
   Ogre::Vector3 position;
   std::string frame = context_->getFrameManager()->getFixedFrame();
@@ -67,10 +65,10 @@ void TwistStampedDisplay::processMessage(const geometry_msgs::TwistStamped::Cons
 
   else
   {
-	////ROS_INFO_STREAM("MEMORY RETAINED AND ALLOCATED");
+    //ROS_INFO_STREAM("MEMORY RETAINED AND ALLOCATED");
     visual = visuals.at(0);
   }
-	////ROS_INFO_STREAM("TIME LENGTH BEING PASSED ON TO THE SETMESSAGE IS"<<timeLength);
+  //ROS_INFO_STREAM("TIME LENGTH BEING PASSED ON TO THE SETMESSAGE IS"<<timeLength);
 
   visual->setMessage(msg,timeLength,width,frame);
   visual->setFramePosition( position );
