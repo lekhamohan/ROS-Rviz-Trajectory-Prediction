@@ -1,10 +1,9 @@
-///* See the file "LICENSE" for the full license and copyrights governing this code. */
-//
+//Visualization of ackermann type messages published
+
 #include "../include/ackermann/ackermann_stamped_visual.h"
 
-//Start of NAmespace
+//Start of Namespace
 namespace path_manager_plugins
-//
 {
   AckermannStampedVisual::AckermannStampedVisual(Ogre::SceneManager* sceneManagerNode, Ogre::SceneNode* parentNode)
   {
@@ -31,11 +30,8 @@ void AckermannStampedVisual::setMessage(const ackermann_msgs::AckermannDriveStam
 
   radius = (wheelLength/(cos(B)*-tan(msg->drive.steering_angle)));
   Vang = msg->drive.speed/radius;
-
-	//ROS_INFO_STREAM("Radius is"<<radius<<"  Vangular is"<<Vang<<"Velocity "<<msg->drive.speed<< "Steering angle "<<msg->drive.steering_angle);
-
   startTheta = 0;
-  endTheta = fabs(Vang) * timeLength; //time - 15 seconds
+  endTheta = fabs(Vang) * timeLength; //time
   float t = startTheta;
 
   if(endTheta-startTheta > 2*M_PI)
@@ -64,18 +60,13 @@ void AckermannStampedVisual::setMessage(const ackermann_msgs::AckermannDriveStam
 
 	tf::Vector3 newPointInRobotFrame(0, 0, 0);
 	//ROS_INFO_STREAM("The pointinRobot  "<< newPointInRobotFrame.getX()<<","<<newPointInRobotFrame.getY()<<","<<newPointInRobotFrame.getZ());
-
 	tf::Vector3 newPointInMapFrame = transform * newPointInRobotFrame;
-
 	//ROS_INFO_STREAM("The transform  "<< transform.getOrigin().getX()<<"  ,"<<transform.getOrigin().getY()<<",  "<<transform.getOrigin().getZ());
-
 	Ogre::Vector3 pointToPush(newPointInMapFrame.getX(), newPointInMapFrame.getY(), newPointInMapFrame.getZ());
-
 	//ROS_INFO_STREAM("The pointinMap   "<< newPointInMapFrame.getX()<<","<<newPointInMapFrame.getY()<<","<< newPointInMapFrame.getZ());
 
 	billBoardVisual->addPoint(pointToPush);
 	billBoardVisual->setLineWidth(width);
-
 
 	for(int i = 0; i < steps; i++)
 	{
@@ -89,20 +80,16 @@ void AckermannStampedVisual::setMessage(const ackermann_msgs::AckermannDriveStam
 		newPointInRobotFrame.setZ(0.0); //transform.getOrigin().z();
 		//ROS_INFO_STREAM("iteration " << i << ", The pointinRobot  "<< newPointInRobotFrame.getX()<<","<<newPointInRobotFrame.getY()<<","<<newPointInRobotFrame.getZ());
 
-		tf::Vector3 newPointInMapFrame = transform * newPointInRobotFrame;
-
+	    tf::Vector3 newPointInMapFrame = transform * newPointInRobotFrame;
 		//ROS_INFO_STREAM("The transform  "<< transform.getOrigin().getX()<<"  ,"<<transform.getOrigin().getY()<<",  "<<transform.getOrigin().getZ());
 
 		Ogre::Vector3 pointToPush(newPointInMapFrame.getX(), newPointInMapFrame.getY(), newPointInMapFrame.getZ());
-
 		//ROS_INFO_STREAM("The pointinMap   "<< newPointInMapFrame.getX()<<","<<newPointInMapFrame.getY()<<","<< newPointInMapFrame.getZ());
 
 		billBoardVisual->addPoint(pointToPush);
 		t += dt;
 	}
-
 	//	ROS_INFO_STREAM("OUTSIDE SET MESSAGE");
-
 }
 
 
@@ -124,7 +111,6 @@ void AckermannStampedVisual::setFrameOrientation( const Ogre::Quaternion& orient
 void AckermannStampedVisual::setColor( float r, float g, float b )
 {
 	billBoardVisual->setColor(r,g,b,1);
-
 }
 
 } // end namespace
