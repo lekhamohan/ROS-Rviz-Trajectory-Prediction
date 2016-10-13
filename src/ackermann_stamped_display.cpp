@@ -1,11 +1,8 @@
-///* i
-//
-//
+//Visualization of Ackermann_msgs published by the robot on Rviz simulator
+
 #include "../include/ackermann/ackermann_stamped_display.h"
-//#include "../include/node_states/twist_stamped_visual.h"
 #include "../include/ackermann/ackermann_stamped_visual.h"
 namespace path_manager_plugins
-
 {
 
 AckermannStampedDisplay::AckermannStampedDisplay()
@@ -16,7 +13,7 @@ AckermannStampedDisplay::AckermannStampedDisplay()
                                                  "Color to visualize the trajectory",
                                                  this, SLOT( updateLengthAndColor() ));
 }
-//
+
 void AckermannStampedDisplay::onInitialize()
 {
 	//ROS_INFO("INSIDE ACK ONINITIALIZE");
@@ -30,9 +27,7 @@ AckermannStampedDisplay::~AckermannStampedDisplay()
 }
 
 void AckermannStampedDisplay::updateLengthAndColor()
-
 {
-	//visuals.rset_capacity(historyLength->getInt());
   color = color_property_->getOgreColor();
   timeLength = length->getInt();
   width = lineWidth->getFloat();
@@ -40,14 +35,14 @@ void AckermannStampedDisplay::updateLengthAndColor()
 
 void AckermannStampedDisplay::reset()
 {
-	//ROS_INFO("ACK RESET");
+  //ROS_INFO("ACK RESET");
   MFDClass::reset();
   visuals.clear();
 }
 
 void AckermannStampedDisplay::processMessage(const ackermann_msgs::AckermannDriveStamped::ConstPtr& msg)
 {
-	//ROS_INFO_STREAM(std::endl<<std::endl<<"ACK PROCESS MESSAGE");
+  //ROS_INFO_STREAM(std::endl<<std::endl<<"ACK PROCESS MESSAGE");
   Ogre::Quaternion orientation;
   Ogre::Vector3 position;
   std::string frame = context_->getFrameManager()->getFixedFrame();
@@ -67,13 +62,10 @@ void AckermannStampedDisplay::processMessage(const ackermann_msgs::AckermannDriv
 
   else
   {
-			//ROS_INFO_STREAM("MEMORY RETAINED AND ALLOCATED");
+  //ROS_INFO_STREAM("MEMORY RETAINED AND ALLOCATED");
     visual = visuals.at(0);
   }
-
-
-	//ROS_INFO_STREAM("TIME LENGTH BEING PASSED ON TO THE SETMESSAGE IS"<<timeLength);
-
+  //ROS_INFO_STREAM("TIME LENGTH BEING PASSED ON TO THE SETMESSAGE IS"<<timeLength);
   visual->setMessage(msg,timeLength,width,frame);
   visual->setFramePosition( position );
   visual->setFrameOrientation( orientation );
